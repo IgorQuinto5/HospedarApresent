@@ -185,7 +185,7 @@
             <div class="left-pane">
                 <div class="title-search">
                     <h2>Registros de Infrações Leves</h2>
-                    <input type="text" id="searchInfracao" placeholder="Pesquisar infração...">
+                    <input type="text" id="searchInfracao" placeholder="Pesquisar Tipo de Infração, Motorista ou Data…">
                 </div>
                 <div class="table-container">
                     <table id="tabelaRegistros">
@@ -233,17 +233,19 @@
         // Função para popular tabela
         const tbody = document.querySelector('#tabelaRegistros tbody');
         
-        function populaTabela(filtro = '') {
+        function populaTabela(filtro = '', gravidade = '') {
+            const filtroMinusculo = filtro.toLowerCase();
             tbody.innerHTML = '';
             dados
-                .filter(row => 
-                    Object.values(row).some(value => 
-                        value.toString().toLowerCase().includes(filtro.toLowerCase())
-                    )
+                .filter(row =>
+                    (row.tipo.toLowerCase().includes(filtroMinusculo) ||
+                        row.motorista.toLowerCase().includes(filtroMinusculo) ||
+                        row.data.toLowerCase().includes(filtroMinusculo)) &&
+                    (gravidade === '' || row.gravidade === gravidade)
                 )
                 .forEach(row => {
                     const tr = document.createElement('tr');
-                    ['tipo', 'data', 'motorista', 'local', 'acao'].forEach(key => {
+                    ['tipo', 'gravidade', 'data', 'motorista', 'acao'].forEach(key => {
                         const td = document.createElement('td');
                         td.textContent = row[key];
                         tr.appendChild(td);
@@ -251,6 +253,7 @@
                     tbody.appendChild(tr);
                 });
         }
+
 
         // Inicialização
         populaTabela();

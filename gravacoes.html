@@ -5,8 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Gravações</title>
-    <link rel="shortcut icon" href="channels4_profile-removebg-preview.png"
-        type="image/x-icon" />
+    <link rel="shortcut icon" href="channels4_profile-removebg-preview.png" type="image/x-icon" />
     <style>
         * {
             box-sizing: border-box;
@@ -247,9 +246,9 @@
             <div class="left-pane">
                 <div class="title-search">
                     <h2>Registros</h2>
-                    <input type="text" id="searchMotorista" placeholder="Pesquisar Motorista…">
+                    <input type="text" id="searchMotorista" placeholder="Pesquisar Motorista ou Data...">
                 </div>
-                <div class="table-container" class="table-wrapper">
+                <div class="table-container">
                     <table id="tabelaRegistros">
                         <thead>
                             <tr id="ADICIONAR">
@@ -257,10 +256,10 @@
                                 <th>Código da Viagem</th>
                                 <th>Infrações Registradas</th>
                                 <th>Motorista</th>
+                                <th>Data</th>
                             </tr>
                         </thead>
                         <tbody>
-                            
                         </tbody>
                     </table>
                 </div>
@@ -317,23 +316,31 @@
             document.getElementById('userDropdown').style.display = 'none';
         });
 
-        // Gera 80 registros de exemplo
-        const dados = Array.from({ length: 1500 }, (_, i) => ({
-            video: `vid${String(i + 1).padStart(3, '0')}.mp4`,
-            viagem: `T${String(i + 1).padStart(4, '0')}`,
-            infra: String(Math.floor(Math.random() * 5)),  // 0 a 4 infrações
-            motorista: `Motorista ${i + Math.floor(Math.random() * 10)}`
-        }));
+        // Gera 1500 registros com datas
+        const dados = Array.from({ length: 1500 }, (_, i) => {
+            const data = new Date(2025, 0, 1 + (i % 365));
+            const dataFormatada = data.toLocaleDateString('pt-BR');
+            return {
+                video: `vid${String(i + 1).padStart(3, '0')}.mp4`,
+                viagem: `T${String(i + 1).padStart(4, '0')}`,
+                infra: String(Math.floor(Math.random() * 5)),
+                motorista: `Motorista ${i + Math.floor(Math.random() * 10)}`,
+                data: dataFormatada
+            };
+        });
 
         const tbody = document.querySelector('#tabelaRegistros tbody');
 
         function populaTabela(filtro = '') {
             tbody.innerHTML = '';
             dados
-                .filter(row => row.motorista.toLowerCase().includes(filtro.toLowerCase()))
+                .filter(row =>
+                    row.motorista.toLowerCase().includes(filtro.toLowerCase()) ||
+                    row.data.includes(filtro)
+                )
                 .forEach(row => {
                     const tr = document.createElement('tr');
-                    ['video', 'viagem', 'infra', 'motorista'].forEach(key => {
+                    ['video', 'viagem', 'infra', 'motorista', 'data'].forEach(key => {
                         const td = document.createElement('td');
                         td.textContent = row[key];
                         tr.appendChild(td);
@@ -342,10 +349,10 @@
                 });
         }
 
-        // Popula inicial
+        // Popula tabela ao carregar
         populaTabela();
 
-        // Filtra ao digitar
+        // Filtrar motorista
         document.getElementById('searchMotorista')
             .addEventListener('input', e => populaTabela(e.target.value));
     </script>

@@ -5,10 +5,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Gravações - Moderado</title>
-    <link rel="shortcut icon" href="channels4_profile-removebg-preview.png"
-        type="image/x-icon" />
+    <link rel="shortcut icon" href="channels4_profile-removebg-preview.png" type="image/x-icon" />
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
@@ -19,6 +23,7 @@
             padding: 20px;
             height: 100vh;
         }
+
         .dashboard {
             background: #fff;
             border-radius: 8px;
@@ -28,6 +33,7 @@
             display: flex;
             flex-direction: column;
         }
+
         .header {
             background: rgb(18, 17, 144);
             color: #fff;
@@ -40,11 +46,35 @@
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
         }
-        .hamburger, .user { cursor: pointer; position: relative; }
-        .hamburger img { width: 50px; height: 60px; transition: transform .3s; }
-        .hamburger:hover img { transform: scale(1.2); }
-        .user img { width: 70px; height: 60px; border-radius: 50%; padding-top: 10px; transition: transform .3s; }
-        .user img:hover { transform: scale(1.2); }
+
+        .hamburger,
+        .user {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .hamburger img {
+            width: 50px;
+            height: 60px;
+            transition: transform .3s;
+        }
+
+        .hamburger:hover img {
+            transform: scale(1.2);
+        }
+
+        .user img {
+            width: 70px;
+            height: 60px;
+            border-radius: 50%;
+            padding-top: 10px;
+            transition: transform .3s;
+        }
+
+        .user img:hover {
+            transform: scale(1.2);
+        }
+
         .dropdown {
             display: none;
             position: absolute;
@@ -57,25 +87,47 @@
             top: 100%;
             z-index: 10;
         }
-        .dropdown a { display: block; padding: 10px; font-size: .9rem; color: #333; text-decoration: none; }
-        .dropdown a:hover { background: #f0f0f0; }
+
+        .dropdown a {
+            display: block;
+            padding: 10px;
+            font-size: .9rem;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .dropdown a:hover {
+            background: #f0f0f0;
+        }
+
         .content {
             flex: 1;
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
+
         .pasta-header {
             background: #e6e6e6;
             padding: 15px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 2px solid #1a4d7a;
+            border-bottom: 2px solid rgb(18, 17, 144);
             flex-shrink: 0;
         }
-        .pasta-title { font-size: 1.5rem; font-weight: bold; color: #1a4d7a; }
-        .search-filter { display: flex; gap: 15px; }
+
+        .pasta-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: rgb(18, 17, 144);
+        }
+
+        .search-filter {
+            display: flex;
+            gap: 15px;
+        }
+
         .search-filter input {
             padding: 8px 12px;
             border: 1px solid #ccc;
@@ -83,6 +135,7 @@
             font-size: 1rem;
             min-width: 250px;
         }
+
         .video-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -91,6 +144,7 @@
             overflow-y: auto;
             flex: 1;
         }
+
         .video-card {
             background: #fff;
             border-radius: 8px;
@@ -102,7 +156,12 @@
             flex-direction: column;
             flex-shrink: 0;
         }
-        .video-card:hover { transform: translateY(-5px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
         .video-thumbnail {
             width: 100%;
             height: 180px;
@@ -114,6 +173,7 @@
             font-size: 1.2rem;
             flex-shrink: 0;
         }
+
         .video-info {
             padding: 15px;
             display: flex;
@@ -121,19 +181,53 @@
             justify-content: space-between;
             flex: 1;
         }
-        .video-title { font-weight: bold; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .video-details { display: flex; justify-content: space-between; color: #666; font-size: 0.9rem; }
-        .video-risk { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
-        .risk-low { background-color: #d4edda; color: #155724; }
-        .risk-medium { background-color: #fff3cd; color: #856404; }
-        .risk-high { background-color: #f8d7da; color: #721c24; }
+
+        .video-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .video-details {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .video-risk {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .risk-low {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .risk-medium {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .risk-high {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
     </style>
 </head>
 
 <body>
     <div class="dashboard">
         <header class="header">
-            <div class="hamburger" id="hamburger"><img src="botao-voltar.png" alt="Voltar" width="50px" height="60px" style="padding-top: 11px;"></div>
+            <div class="hamburger" id="hamburger">
+                <img src="botao-voltar.png" alt="Voltar" width="50px" height="60px" style="padding-top: 11px;">
+            </div>
             <h1>Gravações - Detalhes</h1>
             <div class="user" id="userMenu">
                 <img src="Captura_de_tela_2025-05-23_072607-removebg-preview.png" alt="Usuário">
@@ -147,45 +241,69 @@
             <div class="pasta-header">
                 <div class="pasta-title">Risco Moderado</div>
                 <div class="search-filter">
-                    <input type="text" id="searchVideo" placeholder="Pesquisar vídeo...">
-                    <input type="text" id="filterMotorista" placeholder="Filtrar por motorista...">
+                    <input type="text" id="filterTitulo" placeholder="Pesquisar por título ou motorista...">
+                    <input type="text" id="filterData" placeholder="Filtrar por data (ex: 05/06/2023)...">
                 </div>
             </div>
-            <div class="video-grid" id="videoContainer">
-                
-            </div>
+            <div class="video-grid" id="videoContainer"></div>
         </div>
     </div>
 
     <script>
         document.getElementById('hamburger').onclick = () => history.back();
-        document.getElementById('userMenu').onclick = e => { e.stopPropagation(); const dd = document.getElementById('userDropdown'); dd.style.display = dd.style.display === 'block' ? 'none' : 'block'; };
+        document.getElementById('userMenu').onclick = e => {
+            e.stopPropagation();
+            const dd = document.getElementById('userDropdown');
+            dd.style.display = dd.style.display === 'block' ? 'none' : 'block';
+        };
         window.addEventListener('click', () => document.getElementById('userDropdown').style.display = 'none');
 
-        const videos = [...Array(56).keys()].map(i => {
-            const id = i+1;
-            return { id, titulo: `Viagem T${String(40+id).padStart(4,'0')} - Motorista Nome ${id}`, data: `0${(id%30)+1}/06/2023`, risco: 'Moderado' };
+        const videos = [...Array(34).keys()].map(i => {
+            const id = i + 1;
+            return {
+                id,
+                titulo: `Viagem T${String(200 + id).padStart(4, '0')} - Motorista Nome ${id}`,
+                data: `${String((id % 30) + 1).padStart(2, '0')}/06/2023`,
+                risco: 'Moderado'
+            };
         });
+
         const container = document.getElementById('videoContainer');
-        function carregarVideos(filtro=''){
+        const inputTitulo = document.getElementById('filterTitulo');
+        const inputData = document.getElementById('filterData');
+
+        function carregarVideos() {
+            const filtroTitulo = inputTitulo.value.toLowerCase();
+            const filtroData = inputData.value;
+
             container.innerHTML = '';
-            videos.filter(v=>v.titulo.toLowerCase().includes(filtro.toLowerCase())).forEach(video=>{
-                const card=document.createElement('div'); card.className='video-card';
-                card.innerHTML=`
-                    <div class="video-thumbnail">Thumbnail ${video.id}</div>
-                    <div class="video-info">
-                        <div class="video-title">${video.titulo}</div>
-                        <div class="video-details">
-                            <span>${video.data}</span>
-                            <span class="video-risk risk-medium">${video.risco}</span>
-                        </div>
-                    </div>`;
-                container.appendChild(card);
-            });
+
+            videos
+                .filter(v =>
+                    v.titulo.toLowerCase().includes(filtroTitulo) &&
+                    v.data.includes(filtroData)
+                )
+                .forEach(video => {
+                    const card = document.createElement('div');
+                    card.className = 'video-card';
+                    card.innerHTML = `
+            <div class="video-thumbnail">Thumbnail ${video.id}</div>
+            <div class="video-info">
+                <div class="video-title">${video.titulo}</div>
+                <div class="video-details">
+                <span>${video.data}</span>
+                <span class="video-risk risk-medium">${video.risco}</span>
+                </div>
+            </div>`;
+                    container.appendChild(card);
+                });
         }
+
+        inputTitulo.addEventListener('input', carregarVideos);
+        inputData.addEventListener('input', carregarVideos);
+
         carregarVideos();
-        document.getElementById('searchVideo').addEventListener('input',e=>carregarVideos(e.target.value));
-        document.getElementById('filterMotorista').addEventListener('input',e=>carregarVideos(e.target.value));
     </script>
 </body>
+
 </html>

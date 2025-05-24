@@ -5,8 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Infrações</title>
-    <link rel="shortcut icon" href="channels4_profile-removebg-preview.png"
-        type="image/x-icon" />
+    <link rel="shortcut icon" href="channels4_profile-removebg-preview.png" type="image/x-icon" />
     <style>
         * {
             box-sizing: border-box;
@@ -255,7 +254,7 @@
             <div class="left-pane">
                 <div class="title-search">
                     <h2>Registros de Infrações</h2>
-                    <input type="text" id="searchInfracao" placeholder="Pesquisar Tipo de Infração…">
+                    <input type="text" id="searchInfracao" placeholder="Pesquisar Tipo de Infração, Motorista ou Data…">
                 </div>
                 <div class="table-container" class="table-wrapper">
                     <table id="tabelaRegistros">
@@ -269,7 +268,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                         </tbody>
                     </table>
                 </div>
@@ -345,10 +344,13 @@
         const tbody = document.querySelector('#tabelaRegistros tbody');
 
         function populaTabela(filtro = '', gravidade = '') {
+            const filtroMinusculo = filtro.toLowerCase();
             tbody.innerHTML = '';
             dados
-                .filter(row => 
-                    row.tipo.toLowerCase().includes(filtro.toLowerCase()) &&
+                .filter(row =>
+                    (row.tipo.toLowerCase().includes(filtroMinusculo) ||
+                        row.motorista.toLowerCase().includes(filtroMinusculo) ||
+                        row.data.toLowerCase().includes(filtroMinusculo)) &&
                     (gravidade === '' || row.gravidade === gravidade)
                 )
                 .forEach(row => {

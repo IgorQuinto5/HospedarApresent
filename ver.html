@@ -5,8 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Ver Registros</title>
-    <link rel="shortcut icon" href="channels4_profile-removebg-preview.png"
-        type="image/x-icon" />
+    <link rel="shortcut icon" href="channels4_profile-removebg-preview.png" type="image/x-icon" />
     <style>
         * {
             box-sizing: border-box;
@@ -203,7 +202,7 @@
 
         .folder-container.bottom {
             justify-content: center;
-            
+
             padding-bottom: 200px;
         }
 
@@ -256,7 +255,7 @@
             <div class="left-pane">
                 <div class="title-search">
                     <h2>Registros de Veículos</h2>
-                    <input type="text" id="searchRegistro" placeholder="Pesquisar Placa ou Motorista...">
+                    <input type="text" id="searchRegistro" placeholder="Pesquisar Placa ou Motorista ou Data...">
                 </div>
                 <div class="table-container" class="table-wrapper">
                     <table id="tabelaRegistros">
@@ -270,7 +269,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                         </tbody>
                     </table>
                 </div>
@@ -278,29 +277,34 @@
             <div class="right-pane">
                 <div class="folder-container top">
                     <div class="folder" data-tipo="Caminhao" onclick="filtrarPorTipo('Caminhão')">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png" alt="">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png"
+                            alt="">
                         <span>Caminhões</span>
                     </div>
                     <div class="folder" data-tipo="Carreta" onclick="filtrarPorTipo('Carreta')">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png" alt="">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png"
+                            alt="">
                         <span>Carretas</span>
                     </div>
                 </div>
 
                 <div class="folder-container middle">
                     <div class="folder" data-tipo="Van" onclick="filtrarPorTipo('Van')">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png" alt="">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png"
+                            alt="">
                         <span>Vans</span>
                     </div>
                     <div class="folder" data-tipo="Outros" onclick="filtrarPorTipo('Outros')">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png" alt="">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png"
+                            alt="">
                         <span>Outros Veículos</span>
                     </div>
                 </div>
 
                 <div class="folder-container bottom">
                     <div class="folder" onclick="filtrarPorTipo('')">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png" alt="">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png"
+                            alt="">
                         <span>Qualquer Veículo</span>
                     </div>
                 </div>
@@ -333,11 +337,13 @@
         const tbody = document.querySelector('#tabelaRegistros tbody');
 
         function populaTabela(filtro = '', tipo = '') {
+            const filtroLower = filtro.toLowerCase();
             tbody.innerHTML = '';
             registros
-                .filter(row => 
-                    (row.placa.toLowerCase().includes(filtro.toLowerCase()) || 
-                    row.motorista.toLowerCase().includes(filtro.toLowerCase())) &&
+                .filter(row =>
+                    (row.placa.toLowerCase().includes(filtroLower) ||
+                        row.motorista.toLowerCase().includes(filtroLower) ||
+                        row.inspecao.toLowerCase().includes(filtroLower)) &&
                     (tipo === '' || row.tipo === tipo)
                 )
                 .forEach(row => {

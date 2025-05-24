@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ei Truck</title>
-    <link rel="shortcut icon" href="channels4_profile-removebg-preview.png"
-        type="image/x-icon" />
+    <link rel="shortcut icon" href="channels4_profile-removebg-preview.png" type="image/x-icon" />
     <style>
         * {
             box-sizing: border-box;
@@ -285,8 +284,8 @@
             <nav class="actions">
                 <button onclick="window.location='ranking.html';" id="buttonCor">RANKING</button>
                 <button onclick="window.location='index_infrações.html';" id="buttonCor">INFRAÇÕES</button>
-                <button onclick="window.location='gravacoes.html';"  id="buttonCor">GRAVAÇÕES</button>
-                <button onclick="window.location='fazer_relatorios.html';"  id="buttonCor">FAZER RELATÓRIOS</button>
+                <button onclick="window.location='gravacoes.html';" id="buttonCor">GRAVAÇÕES</button>
+                <button onclick="window.location='fazer_relatorios.html';" id="buttonCor">FAZER RELATÓRIOS</button>
             </nav>
         </div>
     </div>
@@ -300,7 +299,7 @@
                 labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
                 datasets: [{
                     label: 'Número de Infrações',
-                    data: [60, 80, 70, 120, 90, 85, 110],
+                    data: [6, 8, 7, 2, 9, 5, 1],
                     backgroundColor: 'rgba(11, 61, 145, 0.7)',
                     borderColor: 'rgba(11, 61, 145, 1)',
                     borderWidth: 1
@@ -310,7 +309,7 @@
                 scales: {
                     y: {
                         beginAtZero: true,
-                        max: 160
+                        max: 10
                     }
                 },
                 plugins: {
@@ -360,19 +359,19 @@
             let labels, data, yMax;
             switch (period) {
                 case 'week':
+                    labels = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'];
+                    data = [6, 8, 7, 2, 9, 5, 1];
+                    yMax = 10;
+                    break;
+                case 'month':
                     labels = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'];
                     data = [30, 40, 26, 29];
                     yMax = 60;
                     break;
-                case 'month':
+                case 'year':
                     labels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
                     data = [120, 140, 130, 60, 80, 50, 100, 120, 85, 90, 100, 110];
                     yMax = 160;
-                    break;
-                case 'year':
-                    labels = ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'];
-                    data = [420, 320, 190, 500, 520, 460, 140, 180, 240, 290, 120, 410];
-                    yMax = 600;
                     break;
             }
             chart.data.labels = labels;
