@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações - Ei Truck</title>
+    <link rel="shortcut icon" href="channels4_profile-removebg-preview.png"
+        type="image/x-icon" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 20px;
+        }
+
+        header {
+            background-color: #121188;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .settings-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            color: #121188;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .setting-group {
+            margin-bottom: 25px;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            font-weight: 500;
+            color: #1a4d7a;
+        }
+
+        .setting-control {
+            display: flex;
+            align-items: center;
+        }
+
+        select, input[type="range"] {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #121188;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #121188;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #0d0d6e;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #121188;
+            color: white;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .btn-voltar {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            background-color: #121188;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-voltar:hover {
+            background-color: #0d0d6e;
+        }
+
+        @media (max-width: 768px) {
+            .setting-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>Configurações</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="settings-section">
+            <h2>Preferências de Exibição</h2>
+            
+            <div class="setting-group">
+                <div class="setting-item">
+                    <span class="setting-label">Tema do Sistema</span>
+                    <div class="setting-control">
+                        <select id="theme-selector">
+                            <option value="light">Claro</option>
+                            <option value="dark">Escuro</option>
+                            <option value="auto">Automático (segue o sistema)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">Tamanho da Fonte</span>
+                    <div class="setting-control">
+                        <input type="range" id="font-size" min="12" max="24" value="16">
+                        <span id="font-size-value" style="margin-left: 10px;">16px</span>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">Mostrar animações</span>
+                    <div class="setting-control">
+                        <label class="switch">
+                            <input type="checkbox" id="animations-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h2>Preferências de Notificações</h2>
+            
+            <div class="setting-group">
+                <div class="setting-item">
+                    <span class="setting-label">Notificações por e-mail</span>
+                    <div class="setting-control">
+                        <label class="switch">
+                            <input type="checkbox" id="email-notifications" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">Notificações no sistema</span>
+                    <div class="setting-control">
+                        <label class="switch">
+                            <input type="checkbox" id="system-notifications" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">Frequência de alertas</span>
+                    <div class="setting-control">
+                        <select id="alert-frequency">
+                            <option value="immediate">Imediato</option>
+                            <option value="hourly">Por hora</option>
+                            <option value="daily">Diário</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h2>Configurações de Privacidade</h2>
+            
+            <div class="setting-group">
+                <div class="setting-item">
+                    <span class="setting-label">Compartilhar dados anônimos para melhorias</span>
+                    <div class="setting-control">
+                        <label class="switch">
+                            <input type="checkbox" id="share-data" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <span class="setting-label">Mostrar meu nome em relatórios</span>
+                    <div class="setting-control">
+                        <label class="switch">
+                            <input type="checkbox" id="show-name" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn" id="save-settings">Salvar Configurações</button>
+            <button class="btn btn-secondary" id="reset-settings">Restaurar Padrões</button>
+        </div>
+    </div>
+
+    <a href="index.html" class="btn-voltar">Voltar</a>
+
+    <br><br><br><br><br><br>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 - Grupo Ei Truck</p>
+            <p>Versão 2.1.0</p>
+        </div>
+    </footer>
+
+    <script>
+        // Carrega as configurações salvas
+        function loadSettings() {
+            const settings = JSON.parse(localStorage.getItem('eiTruckSettings')) || {};
+            
+            // Preferências de Exibição
+            if (settings.theme) document.getElementById('theme-selector').value = settings.theme;
+            if (settings.fontSize) {
+                document.getElementById('font-size').value = parseInt(settings.fontSize);
+                document.getElementById('font-size-value').textContent = settings.fontSize + 'px';
+            }
+            if (settings.animations !== undefined) document.getElementById('animations-toggle').checked = settings.animations;
+            
+            // Preferências de Notificações
+            if (settings.emailNotifications !== undefined) document.getElementById('email-notifications').checked = settings.emailNotifications;
+            if (settings.systemNotifications !== undefined) document.getElementById('system-notifications').checked = settings.systemNotifications;
+            if (settings.alertFrequency) document.getElementById('alert-frequency').value = settings.alertFrequency;
+            
+            // Configurações de Privacidade
+            if (settings.shareData !== undefined) document.getElementById('share-data').checked = settings.shareData;
+            if (settings.showName !== undefined) document.getElementById('show-name').checked = settings.showName;
+        }
+
+        // Aplica as configurações em todas as páginas
+        function applySettings() {
+            const settings = JSON.parse(localStorage.getItem('eiTruckSettings')) || {};
+            
+            // Aplica o tema
+            if (settings.theme === 'dark' || (settings.theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.style.setProperty('--bg-color', '#1a1a1a');
+                document.documentElement.style.setProperty('--text-color', '#ffffff');
+                document.documentElement.style.setProperty('--card-bg', '#2d2d2d');
+            } else {
+                document.documentElement.style.setProperty('--bg-color', '#f5f7fa');
+                document.documentElement.style.setProperty('--text-color', '#333333');
+                document.documentElement.style.setProperty('--card-bg', '#ffffff');
+            }
+            
+            // Aplica tamanho da fonte
+            if (settings.fontSize) {
+                document.documentElement.style.fontSize = settings.fontSize + 'px';
+            }
+        }
+
+        // Atualiza o valor exibido do tamanho da fonte
+        document.getElementById('font-size').addEventListener('input', function() {
+            document.getElementById('font-size-value').textContent = this.value + 'px';
+        });
+
+        // Salva as configurações
+        document.getElementById('save-settings').addEventListener('click', function() {
+            const settings = {
+                // Preferências de Exibição
+                theme: document.getElementById('theme-selector').value,
+                fontSize: document.getElementById('font-size').value,
+                animations: document.getElementById('animations-toggle').checked,
+                
+                // Preferências de Notificações
+                emailNotifications: document.getElementById('email-notifications').checked,
+                systemNotifications: document.getElementById('system-notifications').checked,
+                alertFrequency: document.getElementById('alert-frequency').value,
+                
+                // Configurações de Privacidade
+                shareData: document.getElementById('share-data').checked,
+                showName: document.getElementById('show-name').checked
+            };
+            
+            localStorage.setItem('eiTruckSettings', JSON.stringify(settings));
+            alert('Configurações salvas com sucesso!');
+            
+            // Aplica as configurações imediatamente
+            applySettings();
+        });
+
+        // Restaura as configurações padrão
+        document.getElementById('reset-settings').addEventListener('click', function() {
+            if (confirm('Tem certeza que deseja restaurar todas as configurações para os valores padrão?')) {
+                localStorage.removeItem('eiTruckSettings');
+                loadSettings();
+                applySettings();
+                alert('Configurações restauradas para os valores padrão.');
+            }
+        });
+
+        // Carrega as configurações quando a página é aberta
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSettings();
+            
+            // Adiciona estas variáveis CSS para serem usadas em todas as páginas
+            const style = document.createElement('style');
+            style.textContent = `
+                :root {
+                    --bg-color: #f5f7fa;
+                    --text-color: #333333;
+                    --card-bg: #ffffff;
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Aplica as configurações
+            applySettings();
+        });
+    </script>
+</body>
+
+</html>

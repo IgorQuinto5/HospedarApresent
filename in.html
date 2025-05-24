@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Minha Conta</title>
+    <link rel="shortcut icon" href="channels4_profile-removebg-preview.png"
+        type="image/x-icon" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .dashboard {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgb(18, 17, 144);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            height: 100px;
+            flex-shrink: 0;
+        }
+
+        .hamburger,
+        .user {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .hamburger img {
+            width: 50px;
+            height: 60px;
+            transition: transform .3s;
+        }
+
+        .hamburger:hover img {
+            transform: scale(1.2);
+        }
+
+        .user img {
+            width: 70px;
+            height: 60px;
+            border-radius: 50%;
+            padding-top: 10px;
+            transition: transform .3s;
+        }
+
+        .user img:hover {
+            transform: scale(1.2);
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            min-width: 150px;
+            right: 0;
+            top: 100%;
+            z-index: 10;
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 10px;
+            font-size: .9rem;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .dropdown a:hover {
+            background: #f0f0f0;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .left-pane {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .left-pane .title-search {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .title-search h2 {
+            font-style: italic;
+            font-size: 1.4rem;
+        }
+
+        .title-search input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .table-container {
+            flex: 1;
+            overflow-y: auto;
+            max-height: calc(90vh - 100px - 80px);
+            padding: 0;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid #1a4d7a;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #cfe2f3;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #eef;
+        }
+
+        .right-pane {
+            flex: 1;
+            border-left: 2px solid #1a4d7a;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .folder-container {
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+            width: 100%;
+        }
+
+        .folder-container.top,
+        .folder-container.middle {
+            margin-bottom: 20px;
+        }
+
+        .folder-container.top {
+            padding-top: 55px;
+        }
+
+        .folder-container.middle {
+            padding-bottom: 10px;
+        }
+
+        .folder-container.bottom {
+            justify-content: center;
+            
+            padding-bottom: 200px;
+        }
+
+        .folder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: .9rem;
+            cursor: pointer;
+            transition: transform .2s;
+            width: 100px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-align: center;
+        }
+
+        .folder span {
+            font-size: 0.85rem;
+            max-width: 100%;
+        }
+
+        .folder img {
+            width: 100px;
+            height: 90px;
+            margin-bottom: 8px;
+        }
+
+        .folder:hover {
+            transform: scale(1.1);
+        }
+        
+        .account-info {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .info-group {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+
+        .info-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #1a4d7a;
+        }
+
+        .info-group input,
+        .info-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+
+        .edit-button {
+            background: #1a4d7a;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+            margin-top: 20px;
+        }
+
+        .edit-button:hover {
+            background: #123456;
+        }
+
+        .folder-container.account-actions {
+            gap: 30px;
+            padding-top: 20px;
+        }
+
+        .folder.account-action {
+            width: 120px;
+        }
+
+        .folder.account-action span {
+            font-size: 0.8rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard">
+        <header class="header">
+            <div class="hamburger" id="hamburger">
+                <img src="botao-voltar.png" alt="Voltar" width="50px" height="60px" style="padding-top: 11px;">
+            </div>
+            <h1>Minha Conta</h1>
+            <div class="user" id="userMenu">
+                <img src="Captura_de_tela_2025-05-23_072607-removebg-preview.png" alt="Usuário">
+                <div class="dropdown" id="userDropdown">
+                    <a href="#">Conta</a>
+                    <a href="#">Sair da conta</a>
+                </div>
+            </div>
+        </header>
+        <div class="content">
+            <div class="left-pane">
+                <div class="account-info">
+                    <div class="info-group">
+                        <label>Nome Completo:</label>
+                        <input type="text" id="nome" value="Fulano de tal" readonly>
+                    </div>
+                    
+                    <div class="info-group">
+                        <label>Email:</label>
+                        <input type="email" id="email" value="fulano@empresa.com" readonly>
+                    </div>
+                    
+                    <div class="info-group">
+                        <label>Cargo/Função:</label>
+                        <input type="text" id="cargo" value="Supervisor de Frota" readonly>
+                    </div>
+                    
+                    <div class="info-group">
+                        <label>Data de Cadastro:</label>
+                        <input type="text" id="dataCadastro" value="15/03/2022" readonly>
+                    </div>
+
+                    <button class="edit-button" id="editButton">Editar Dados</button>
+                </div>
+            </div>
+
+            <div class="right-pane">
+                <div class="folder-container account-actions">
+                    <div class="folder account-action" onclick="showModal('senha')">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png" alt="Alterar Senha">
+                        <span>Alterar Senha</span>
+                    </div>
+                    
+                    <div class="folder account-action" onclick="showModal('notificacoes')">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png" alt="Notificações">
+                        <span>Notificações</span>
+                    </div>
+                    
+                    <div class="folder account-action" onclick="showModal('preferencias')">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png" alt="Preferências">
+                        <span>Preferências</span>
+                    </div>
+                    
+                    <div class="folder account-action" onclick="showModal('excluir')">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png" alt="Excluir Conta">
+                        <span>Excluir Conta</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="senhaModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('senha')">&times;</span>
+            <h2>Alterar Senha</h2>
+            <form id="senhaForm">
+                <div class="info-group">
+                    <label>Senha Atual:</label>
+                    <input type="password" required>
+                </div>
+                <div class="info-group">
+                    <label>Nova Senha:</label>
+                    <input type="password" required>
+                </div>
+                <div class="info-group">
+                    <label>Confirmar Nova Senha:</label>
+                    <input type="password" required>
+                </div>
+                <button type="submit" class="edit-button">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Mantemos o JavaScript anterior e adicionamos:
+        
+        let editMode = false;
+        const editButton = document.getElementById('editButton');
+        const inputs = document.querySelectorAll('.account-info input');
+
+        editButton.addEventListener('click', () => {
+            editMode = !editMode;
+            inputs.forEach(input => {
+                if(input.id !== 'dataCadastro') {
+                    input.readOnly = !editMode;
+                }
+            });
+            editButton.textContent = editMode ? 'Salvar Alterações' : 'Editar Dados';
+            
+            if(!editMode) {
+                // Aqui iria a lógica para salvar no servidor
+                alert('Alterações salvas com sucesso!');
+            }
+        });
+
+        function showModal(type) {
+            document.getElementById(`${type}Modal`).style.display = 'flex';
+        }
+
+        function closeModal(type) {
+            document.getElementById(`${type}Modal`).style.display = 'none';
+        }
+
+        // Fechar modal ao clicar fora
+        window.onclick = function(event) {
+            if(event.target.className === 'modal') {
+                event.target.style.display = 'none';
+            }
+        }
+        document.getElementById('hamburger').onclick = () => history.back();
+    </script>
+</body>
+</html>

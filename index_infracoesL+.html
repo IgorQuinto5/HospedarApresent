@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Infrações Médias</title>
+    <link rel="shortcut icon" href="channels4_profile-removebg-preview.png"
+        type="image/x-icon" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .dashboard {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgb(18, 17, 144);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            height: 100px;
+            flex-shrink: 0;
+        }
+
+        .hamburger,
+        .user {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .hamburger img {
+            width: 50px;
+            height: 60px;
+            transition: transform .3s;
+        }
+
+        .hamburger:hover img {
+            transform: scale(1.2);
+        }
+
+        .user img {
+            width: 70px;
+            height: 60px;
+            border-radius: 50%;
+            padding-top: 10px;
+            transition: transform .3s;
+        }
+
+        .user img:hover {
+            transform: scale(1.2);
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            min-width: 150px;
+            right: 0;
+            top: 100%;
+            z-index: 10;
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 10px;
+            font-size: .9rem;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .dropdown a:hover {
+            background: #f0f0f0;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .left-pane {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .title-search {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .title-search h2 {
+            font-style: italic;
+            font-size: 1.4rem;
+        }
+
+        .title-search input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 2px solid #1a4d7a;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .table-container {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #e6f3ff;
+            position: sticky;
+            top: 0;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #e2e8f0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard">
+        <header class="header">
+            <div class="hamburger" id="hamburger">
+                <img src="botao-voltar.png" alt="Voltar" width="50px" height="60px" style="padding-top: 11px;">
+            </div>
+            <h1>Infrações Médias</h1>
+            <div class="user" id="userMenu">
+                <img src="Captura_de_tela_2025-05-23_072607-removebg-preview.png" alt="Usuário">
+                <div class="dropdown" id="userDropdown">
+                    <a href="in.html">Conta</a>
+                    <a href="#">Sair da conta</a>
+                </div>
+            </div>
+        </header>
+        <div class="content">
+            <div class="left-pane">
+                <div class="title-search">
+                    <h2>Registros de Infrações Médias</h2>
+                    <input type="text" id="searchInfracao" placeholder="Pesquisar infração...">
+                </div>
+                <div class="table-container">
+                    <table id="tabelaRegistros">
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Data/Hora</th>
+                                <th>Motorista</th>
+                                <th>Local</th>
+                                <th>Ação Tomada</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dados serão preenchidos pelo JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funções de navegação
+        document.getElementById('hamburger').onclick = () => history.back();
+
+        // Dropdown do usuário
+        document.getElementById('userMenu').onclick = e => {
+            e.stopPropagation();
+            const dd = document.getElementById('userDropdown');
+            dd.style.display = dd.style.display === 'block' ? 'none' : 'block';
+        };
+        window.addEventListener('click', () => {
+            document.getElementById('userDropdown').style.display = 'none';
+        });
+
+        // Dados de exemplo para infrações médias
+        const dados = Array.from({ length: 150 }, (_, i) => ({
+            tipo: ["Estacionar em local proibido", "Uso indevido de buzina", "Transitar na faixa da direita", "Ultrapassagem irregular"][Math.floor(Math.random() * 4)],
+            data: new Date(Date.now() - Math.random() * 31536000000).toLocaleString(),
+            motorista: `Motorista ${String(Math.floor(Math.random() * 1000)).padStart(4, '0')}`,
+            local: `Setor ${String.fromCharCode(65 + Math.floor(Math.random() * 26))}-${Math.floor(Math.random() * 100)}`,
+            acao: ["Multa média", "Advertência formal", "Curso obrigatório"][Math.floor(Math.random() * 3)]
+        }));
+
+        // Função para popular tabela
+        const tbody = document.querySelector('#tabelaRegistros tbody');
+        
+        function populaTabela(filtro = '') {
+            tbody.innerHTML = '';
+            dados
+                .filter(row => 
+                    Object.values(row).some(value => 
+                        value.toString().toLowerCase().includes(filtro.toLowerCase())
+                    )
+                )
+                .forEach(row => {
+                    const tr = document.createElement('tr');
+                    ['tipo', 'data', 'motorista', 'local', 'acao'].forEach(key => {
+                        const td = document.createElement('td');
+                        td.textContent = row[key];
+                        tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+        }
+
+        // Inicialização
+        populaTabela();
+
+        // Filtro de pesquisa
+        document.getElementById('searchInfracao')
+            .addEventListener('input', e => populaTabela(e.target.value));
+    </script>
+</body>
+
+</html>

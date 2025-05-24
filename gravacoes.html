@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Gravações</title>
+    <link rel="shortcut icon" href="channels4_profile-removebg-preview.png"
+        type="image/x-icon" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .dashboard {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgb(18, 17, 144);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            height: 100px;
+            flex-shrink: 0;
+        }
+
+        .hamburger,
+        .user {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .hamburger img {
+            width: 50px;
+            height: 60px;
+            transition: transform .3s;
+        }
+
+        .hamburger:hover img {
+            transform: scale(1.2);
+        }
+
+        .user img {
+            width: 70px;
+            height: 60px;
+            border-radius: 50%;
+            padding-top: 10px;
+            transition: transform .3s;
+        }
+
+        .user img:hover {
+            transform: scale(1.2);
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            min-width: 150px;
+            right: 0;
+            top: 100%;
+            z-index: 10;
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 10px;
+            font-size: .9rem;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .dropdown a:hover {
+            background: #f0f0f0;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .left-pane {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .left-pane .title-search {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .title-search h2 {
+            font-style: italic;
+            font-size: 1.4rem;
+        }
+
+        .title-search input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .table-container {
+            flex: 1;
+            overflow-y: auto;
+            max-height: calc(90vh - 100px - 80px);
+            padding: 0;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid #1a4d7a;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #cfe2f3;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #eef;
+        }
+
+        .right-pane {
+            flex: 1;
+            border-left: 2px solid #1a4d7a;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .folder-container {
+            display: flex;
+            justify-content: center;
+            gap: 100px;
+            width: 100%;
+        }
+
+        .folder-container.top,
+        .folder-container.middle {
+            margin-bottom: 20px;
+        }
+
+        .folder-container.bottom {
+            justify-content: center;
+        }
+
+        .folder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: .9rem;
+            cursor: pointer;
+            transition: transform .2s;
+            width: 100px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-align: center;
+
+        }
+
+        .folder span {
+            font-size: 0.85rem;
+            max-width: 100%;
+        }
+
+        .folder img {
+            width: 100px;
+            height: 90px;
+            margin-bottom: 8px;
+        }
+
+        .folder:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard">
+        <header class="header">
+            <div class="hamburger" id="hamburger">
+                <img src="botao-voltar.png" alt="Voltar" width="50px" height="60px" style="padding-top: 11px;">
+            </div>
+            <h1>Gravações</h1>
+            <div class="user" id="userMenu">
+                <img src="Captura_de_tela_2025-05-23_072607-removebg-preview.png" alt="Usuário">
+                <div class="dropdown" id="userDropdown">
+                    <a href="in.html">Conta</a>
+                    <a href="#">Sair da conta</a>
+                </div>
+            </div>
+        </header>
+        <div class="content">
+            <div class="left-pane">
+                <div class="title-search">
+                    <h2>Registros</h2>
+                    <input type="text" id="searchMotorista" placeholder="Pesquisar Motorista…">
+                </div>
+                <div class="table-container" class="table-wrapper">
+                    <table id="tabelaRegistros">
+                        <thead>
+                            <tr id="ADICIONAR">
+                                <th>Vídeo</th>
+                                <th>Código da Viagem</th>
+                                <th>Infrações Registradas</th>
+                                <th>Motorista</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="right-pane">
+                <div class="folder-container top">
+                    <div class="folder" data-risk="Muito Baixo" onclick="window.location='index_riscoMuitoB.html';">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png"
+                            alt="">
+                        <span>Risco Muito Baixo</span>
+                    </div>
+                    <div class="folder" data-risk="Baixo" onclick="window.location='index_riscoBaixo.html';">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png"
+                            alt="">
+                        <span>Risco Baixo</span>
+                    </div>
+                </div>
+
+                <div class="folder-container middle">
+                    <div class="folder" data-risk="Moderado" onclick="window.location='index_riscoModerado.html';">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png"
+                            alt="">
+                        <span>Risco Moderado</span>
+                    </div>
+                    <div class="folder" data-risk="Alto" onclick="window.location='index_riscoAlto.html';">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png"
+                            alt="">
+                        <span>Risco Alto</span>
+                    </div>
+                </div>
+
+                <div class="folder-container bottom">
+                    <div class="folder" data-risk="Muito Alto" onclick="window.location='index_riscoMuitoA.html';">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/OneDrive_Folder_Icon.svg/1024px-OneDrive_Folder_Icon.svg.png"
+                            alt="">
+                        <span>Risco Muito Alto</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Voltar à página anterior
+        document.getElementById('hamburger').onclick = () => history.back();
+
+        // Toggle dropdown do usuário
+        document.getElementById('userMenu').onclick = e => {
+            e.stopPropagation();
+            const dd = document.getElementById('userDropdown');
+            dd.style.display = dd.style.display === 'block' ? 'none' : 'block';
+        };
+        window.addEventListener('click', () => {
+            document.getElementById('userDropdown').style.display = 'none';
+        });
+
+        // Gera 80 registros de exemplo
+        const dados = Array.from({ length: 1500 }, (_, i) => ({
+            video: `vid${String(i + 1).padStart(3, '0')}.mp4`,
+            viagem: `T${String(i + 1).padStart(4, '0')}`,
+            infra: String(Math.floor(Math.random() * 5)),  // 0 a 4 infrações
+            motorista: `Motorista ${i + Math.floor(Math.random() * 10)}`
+        }));
+
+        const tbody = document.querySelector('#tabelaRegistros tbody');
+
+        function populaTabela(filtro = '') {
+            tbody.innerHTML = '';
+            dados
+                .filter(row => row.motorista.toLowerCase().includes(filtro.toLowerCase()))
+                .forEach(row => {
+                    const tr = document.createElement('tr');
+                    ['video', 'viagem', 'infra', 'motorista'].forEach(key => {
+                        const td = document.createElement('td');
+                        td.textContent = row[key];
+                        tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+        }
+
+        // Popula inicial
+        populaTabela();
+
+        // Filtra ao digitar
+        document.getElementById('searchMotorista')
+            .addEventListener('input', e => populaTabela(e.target.value));
+    </script>
+</body>
+
+</html>

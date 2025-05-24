@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ei Truck</title>
+    <link rel="shortcut icon" href="channels4_profile-removebg-preview.png"
+        type="image/x-icon" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .dashboard {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 90vh;
+        }
+
+        .header {
+            background: rgb(18, 17, 144);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            height: 100px;
+            position: relative;
+        }
+
+        .menu,
+        .user {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .menu {
+            font-size: 1.9rem;
+            padding-left: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .user img {
+            width: 70px;
+            height: 60px;
+            border-radius: 50%;
+            padding-top: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            min-width: 150px;
+            z-index: 10;
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .dropdown a:hover {
+            background: #f0f0f0;
+        }
+
+        #userDropdown {
+            top: 100%;
+            right: 0;
+        }
+
+        #hamburgerDropdown {
+            top: 100%;
+            left: 0;
+        }
+
+        .content {
+            display: flex;
+            padding: 20px;
+        }
+
+        .analysis {
+            flex: 1;
+            padding-right: 20px;
+            border-right: 1px solid #eee;
+            height: 430px;
+        }
+
+        .analysis h1 {
+            font-size: 1.3rem;
+            color: #666;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .period-btn {
+            padding: 6px 12px;
+            font-size: 14px;
+            background: rgb(18, 17, 144);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .period-dropdown {
+            display: none;
+            position: absolute;
+            top: 36px;
+            right: 0;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .period-dropdown a {
+            display: block;
+            padding: 8px 12px;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .period-dropdown a:hover {
+            background: #f0f0f0;
+        }
+
+        .analysis canvas {
+            background: #fafafa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .report-link {
+            display: inline-block;
+            margin-top: 12px;
+            font-style: italic;
+            text-decoration: underline;
+            color: #333;
+            font-size: 20px;
+            padding-top: 6px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .report-link:hover {
+            color: rgb(18, 17, 144);
+            transform: scale(1.02);
+        }
+
+        button:hover {
+            background-color: rgb(7, 7, 97);
+        }
+
+        nav button:hover {
+            background-color: rgb(7, 7, 97);
+        }
+
+        .actions {
+            width: 550px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding-left: 80px;
+            padding-top: 50px;
+        }
+
+        .actions button {
+            background: rgb(18, 17, 144);
+            color: #fff;
+            border: none;
+            padding: 14px;
+            font-size: 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background .2s;
+            width: 400px;
+            height: 80px;
+        }
+
+        img {
+            transition: transform 0.3s ease;
+        }
+
+        #aumentar {
+            transition: transform 0.3s ease;
+        }
+
+        #aumentar:hover {
+            transform: scale(1.20);
+        }
+
+
+        .user img:hover {
+            transform: scale(1.20);
+        }
+
+        .actions button:hover {
+            background: rgb(18, 17, 144);
+        }
+
+        #irParaEsquerda {
+            padding-right: 25px;
+        }
+
+        #buttonCor {
+            background: rgb(18, 17, 144);
+        }
+
+        #buttonCor:hover {
+            background-color: rgb(7, 7, 97);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard">
+        <header class="header">
+            <div class="menu" id="hamburger">
+                <h4 id="aumentar">☰</h4>
+                <div class="dropdown" id="hamburgerDropdown">
+                    <a href="configuracoes.html">Configurações</a>
+                    <a href="informacoes.html">Informações</a>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: space-around; gap: 25px;">
+                <img src="Group 57 (2).png" alt="" width="160px" height="60px">
+            </div>
+            <div class="user" id="userMenu">
+                <img id="imgUser" src="Captura_de_tela_2025-05-23_072607-removebg-preview.png" alt="Usuário" />
+                <div class="dropdown" id="userDropdown">
+                    <a href="in.html">Conta</a>
+                    <a href="#">Sair da conta</a>
+                </div>
+            </div>
+        </header>
+
+        <div class="content">
+            <section class="analysis">
+                <div class="chart-header">
+                    <h1>Análise - Infrações</h1>
+                    <div id="irParaEsquerda" style="position: relative;">
+                        <button class="period-btn" id="periodBtn">Período ▾</button>
+                        <div class="dropdown period-dropdown" id="periodDropdown">
+                            <a href="#" data-period="week">Semanal</a>
+                            <a href="#" data-period="month">Mensal</a>
+                            <a href="#" data-period="year">Anual</a>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="weeklyChart" width="400" height="200"></canvas>
+                <div onclick="window.location='ver.html';" class="report-link">Ver Registros</div>
+            </section>
+            <nav class="actions">
+                <button onclick="window.location='ranking.html';" id="buttonCor">RANKING</button>
+                <button onclick="window.location='index_infrações.html';" id="buttonCor">INFRAÇÕES</button>
+                <button onclick="window.location='gravacoes.html';"  id="buttonCor">GRAVAÇÕES</button>
+                <button onclick="window.location='fazer_relatorios.html';"  id="buttonCor">FAZER RELATÓRIOS</button>
+            </nav>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('weeklyChart').getContext('2d');
+        let chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+                datasets: [{
+                    label: 'Número de Infrações',
+                    data: [60, 80, 70, 120, 90, 85, 110],
+                    backgroundColor: 'rgba(11, 61, 145, 0.7)',
+                    borderColor: 'rgba(11, 61, 145, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 160
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true,
+                    onHover: function (event, chartElement) {
+                        event.native.target.style.cursor = chartElement.length ? 'pointer' : 'default';
+                    }
+                },
+                animation: {
+                    duration: 300
+                },
+                elements: {
+                    bar: {
+                        backgroundColor: 'rgba(11, 61, 145, 0.7)',
+                        hoverBackgroundColor: 'rgba(11, 61, 145, 1)',
+                        borderRadius: 4,
+
+                    }
+                }
+            }
+        });
+
+        document.getElementById('periodBtn').addEventListener('click', function () {
+            const dropdown = document.getElementById('periodDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        });
+
+        document.querySelectorAll('#periodDropdown a').forEach(item => {
+            item.addEventListener('click', function (e) {
+                e.preventDefault();
+                const period = this.getAttribute('data-period');
+                updateChartData(period);
+                document.getElementById('periodDropdown').style.display = 'none';
+            });
+        });
+
+        function updateChartData(period) {
+            let labels, data, yMax;
+            switch (period) {
+                case 'week':
+                    labels = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'];
+                    data = [30, 40, 26, 29];
+                    yMax = 60;
+                    break;
+                case 'month':
+                    labels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+                    data = [120, 140, 130, 60, 80, 50, 100, 120, 85, 90, 100, 110];
+                    yMax = 160;
+                    break;
+                case 'year':
+                    labels = ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'];
+                    data = [420, 320, 190, 500, 520, 460, 140, 180, 240, 290, 120, 410];
+                    yMax = 600;
+                    break;
+            }
+            chart.data.labels = labels;
+            chart.data.datasets[0].data = data;
+            chart.options.scales.y.max = yMax;
+            chart.update();
+        }
+
+        document.getElementById('userMenu').addEventListener('click', function (e) {
+            const ud = document.getElementById('userDropdown');
+            ud.style.display = ud.style.display === 'block' ? 'none' : 'block';
+            document.getElementById('hamburgerDropdown').style.display = 'none';
+        });
+
+        document.getElementById('hamburger').addEventListener('click', function (e) {
+            const hd = document.getElementById('hamburgerDropdown');
+            hd.style.display = hd.style.display === 'block' ? 'none' : 'block';
+            document.getElementById('userDropdown').style.display = 'none';
+        });
+
+        window.addEventListener('click', function (e) {
+            if (!document.getElementById('userMenu').contains(e.target)) {
+                document.getElementById('userDropdown').style.display = 'none';
+            }
+            if (!document.getElementById('hamburger').contains(e.target)) {
+                document.getElementById('hamburgerDropdown').style.display = 'none';
+            }
+            if (!document.getElementById('periodBtn').contains(e.target)) {
+                document.getElementById('periodDropdown').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

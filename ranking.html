@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ranking</title>
+    <link rel="shortcut icon" href="channels4_profile-removebg-preview.png"
+        type="image/x-icon" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .dashboard {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgb(18, 17, 144);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            height: 100px;
+            flex-shrink: 0;
+        }
+
+        .header .hamburger {
+            font-size: 1.9rem;
+            cursor: pointer;
+            padding-left: 15px;
+        }
+
+        .user {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .user img {
+            width: 70px;
+            height: 60px;
+            border-radius: 50%;
+            padding-top: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            min-width: 150px;
+            z-index: 10;
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .dropdown a:hover {
+            background: #f0f0f0;
+        }
+
+        #userDropdown {
+            top: 100%;
+            right: 0;
+        }
+
+        .controls {
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+
+        .controls label {
+            margin-right: 4px;
+            font-weight: bold;
+        }
+
+        .controls input {
+            width: 60px;
+            padding: 4px;
+        }
+
+        .controls button {
+            padding: 6px 12px;
+            background: rgb(18, 17, 144);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .controls button:hover {
+            background: rgb(15, 14, 120);
+        }
+
+        .table-container {
+            flex: 1;
+            overflow-y: auto;
+            max-height: calc(90vh - 100px - 80px);
+            padding: 0;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding-left: 250px;
+            padding-right: 250px;
+        }
+
+        th,
+        td {
+            border: 1px solid #1a4d7a;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #cfe2f3;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #eef;
+        }
+
+        thead th {
+            position: sticky;
+            top: 0;
+            background-color: #cfe2f3;
+            z-index: 10;
+            border: 1px solid #1a4d7a;
+            padding: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        tbody td {
+            border: 1px solid #1a4d7a;
+            padding: 8px;
+        }
+
+        .user img:hover {
+            transform: scale(1.20);
+        }
+
+        .hamburger img {
+            width: 50px;
+            height: 60px;
+            transition: transform 0.3s ease;
+        }
+
+        .hamburger:hover img {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard">
+
+        <header class="header">
+            <div class="hamburger" id="hamburger"><img src="botao-voltar.png" alt="" width="50px" height="60px"
+                    style="padding-top: 11px;"></div>
+            <h1 style="color: #fff;">Ranking</h1>
+            <div class="user" id="userMenu">
+                <img id="imgUser" src="Captura_de_tela_2025-05-23_072607-removebg-preview.png" alt="Usuário" />
+                <div class="dropdown" id="userDropdown">
+                    <a href="in.html">Conta</a>
+                    <a href="#">Sair da conta</a>
+                </div>
+            </div>
+        </header>
+
+        <div class="controls">
+            <div>
+                <label for="numLinhasAdd">Adicionar linha(s):</label>
+                <input type="number" id="numLinhasAdd" min="1" max="100" value="1" />
+                <button onclick="adicionarLinhas()">+</button>
+            </div>
+            <div>
+                <label for="numLinhasRem">Remover linha(s):</label>
+                <input type="number" id="numLinhasRem" min="1" max="100" value="1" />
+                <button onclick="removerLinhas()">-</button>
+            </div>
+            <div>
+                <button onclick="limparTabela()">Limpar Tudo</button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="tabelaRanking">
+                <thead>
+                    <tr>
+                        <th>Colocação</th>
+                        <th>Nome Completo</th>
+                        <th>Quantidade de Viagens</th>
+                        <th>Horas Trabalhadas</th>
+                        <th>Pontuação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        // Dropdown do usuário
+        document.getElementById('userMenu').addEventListener('click', function () {
+            const ud = document.getElementById('userDropdown');
+            ud.style.display = ud.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Botão hamburger volta para a página anterior
+        document.getElementById('hamburger').addEventListener('click', function () {
+            history.back();
+        });
+
+        // Adiciona linhas ao final da tabela
+        function adicionarLinhas() {
+            const qtd = parseInt(document.getElementById('numLinhasAdd').value, 10) || 0;
+            const tbody = document.querySelector('#tabelaRanking tbody');
+            const currentCount = tbody.children.length;
+            for (let i = 0; i < qtd; i++) {
+                const tr = document.createElement('tr');
+                // Colocação = índice+1
+                const tdPos = document.createElement('td');
+                tdPos.textContent = currentCount + i + 1;
+                tr.appendChild(tdPos);
+                // demais células em branco
+                for (let j = 0; j < 4; j++) {
+                    tr.appendChild(document.createElement('td'));
+                }
+                tbody.appendChild(tr);
+            }
+        }
+
+        // Remove linhas a partir do final
+        function removerLinhas() {
+            const qtd = parseInt(document.getElementById('numLinhasRem').value, 10) || 0;
+            const tbody = document.querySelector('#tabelaRanking tbody');
+            for (let i = 0; i < qtd; i++) {
+                if (tbody.lastElementChild) {
+                    tbody.removeChild(tbody.lastElementChild);
+                } else {
+                    break;
+                }
+            }
+            // Reajusta colocações
+            Array.from(tbody.children).forEach((tr, idx) => {
+                tr.firstElementChild.textContent = idx + 1;
+            });
+        }
+
+        // Limpa todas as linhas da tabela
+        function limparTabela() {
+            const tbody = document.querySelector('#tabelaRanking tbody');
+            tbody.innerHTML = '';
+        }
+
+        // Fecha dropdown ao clicar fora
+        window.addEventListener('click', function (e) {
+            if (!document.getElementById('userMenu').contains(e.target)) {
+                document.getElementById('userDropdown').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

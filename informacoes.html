@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informações</title>
+    <link rel="shortcut icon" href="channels4_profile-removebg-preview.png"
+        type="image/x-icon" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+        }
+
+        header {
+            background-color: #121188;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .info-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            color: #121188;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        h3 {
+            color: #1a4d7a;
+            margin: 25px 0 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background-color: #f9f9f9;
+            border-left: 4px solid #121188;
+            padding: 20px;
+            border-radius: 4px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #121188;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #121188;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #0d0d6e;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #121188;
+            color: white;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .feature-cards {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .btn-voltar {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            background-color: #121188;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-voltar:hover {
+            background-color: #0d0d6e;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>Ei truck</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="info-section">
+            <h2>Sobre a telemetria</h2>
+            <p>Telemetria é a tecnologia que permite a medição e a transmissão de dados a distância, geralmente por
+                meios eletrônicos ou sem fio. Essa técnica é amplamente utilizada em diversos setores, como aviação,
+                automobilismo, indústria, agricultura e tecnologia da informação. Em essência, sensores coletam
+                informações — como temperatura, pressão, velocidade ou localização — e as enviam para um sistema
+                central, onde podem ser monitoradas e analisadas em tempo real. Isso permite que decisões sejam tomadas
+                rapidamente com base em dados precisos e atualizados.</p>
+
+            <p>Na área de software e tecnologia, a telemetria é fundamental para o monitoramento do desempenho de
+                sistemas e aplicativos. Empresas usam essa técnica para coletar dados de uso, detectar falhas, melhorar
+                a experiência do usuário e otimizar recursos. No entanto, o uso de telemetria também levanta
+                preocupações sobre privacidade e segurança, já que envolve a coleta constante de informações dos
+                usuários. Por isso, é importante que as organizações sejam transparentes sobre os dados coletados e
+                ofereçam opções para que os usuários possam controlar o nível de monitoramento.</p>
+        </div>
+
+        <div class="info-section">
+            <h2>Logística</h2>
+
+            <div class="feature-cards">
+                <div class="card">
+                    <h3>Planejamento Operacional</h3>
+                    <p>Envolve o estudo detalhado de rotas, recursos e cronogramas para garantir a execução eficiente
+                        das atividades.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Distribuição de Recursos</h3>
+                    <p>Gerencia o envio e alocação de materiais, equipamentos e pessoal conforme a demanda e localização
+                        geográfica.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Transporte e Mobilidade</h3>
+                    <p>Organiza a movimentação de cargas e equipes, otimizando tempo e custo com o uso de rotas
+                        adequadas e modais eficientes.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Armazenamento e Estoque</h3>
+                    <p>Controla a estocagem de itens com segurança, garantindo fácil acesso, rastreabilidade e reposição
+                        eficiente.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Gestão de Fornecedores</h3>
+                    <p>Coordena contratos, prazos de entrega e qualidade dos insumos recebidos de terceiros para manter
+                        a cadeia logística fluida.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Monitoramento e Rastreabilidade</h3>
+                    <p>Permite o acompanhamento em tempo real do fluxo logístico, aumentando a previsibilidade e
+                        reduzindo falhas operacionais.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>Sobre a TRS</h2>
+
+            <h3>O que é a TRS?</h3>
+            <ul>
+                <li>É a sigla para Tecnologia de Registro e Segurança</li>
+                <li>Solução voltada para o monitoramento inteligente do trânsito</li>
+                <li>Utiliza sensores, câmeras e redes de comunicação em tempo real</li>
+                <li>Permite o registro automático de eventos e comportamentos nas vias</li>
+            </ul>
+
+            <h3>Como funciona?</h3>
+            <ul>
+                <li>Dispositivos instalados em pontos estratégicos coletam dados continuamente</li>
+                <li>As informações são enviadas para uma central de análise e processamento</li>
+                <li>O sistema identifica situações de risco, irregularidades e padrões de comportamento</li>
+                <li>Os dados processados apoiam ações de fiscalização, planejamento e segurança viária</li>
+            </ul>
+        </div>
+
+        <div class="info-section">
+            <h2>Tecnologias Utilizadas</h2>
+            <p>O sistema foi desenvolvido com as seguintes tecnologias:</p>
+
+            <ul>
+                <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript moderno (ES6+)</li>
+                <li><strong>Visualização de dados:</strong> Chart.js para gráficos interativos</li>
+                <li><strong>Design:</strong> Layout responsivo que se adapta a qualquer dispositivo</li>
+                <li><strong>Performance:</strong> Otimizado para rápido carregamento mesmo com grandes volumes de dados
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <a href="index.html" class="btn-voltar">Voltar</a>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 - Grupo Ei Truck</p>
+            <p>Versão 2.1.0</p>
+        </div>
+    </footer>
+</body>
+
+</html>
